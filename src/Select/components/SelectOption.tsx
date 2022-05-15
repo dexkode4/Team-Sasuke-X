@@ -1,19 +1,22 @@
-import { Box } from '@chakra-ui/react';
+import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { SelectContext, Value } from '../context';
 
-interface SelectOptionProps {
+interface SelectOptionProps extends BoxProps {
 	children: React.ReactNode;
-	value: Value
+	value: Value;
 }
 
-export const SelectOption = ({ children, value }: SelectOptionProps) => {
-	const { handleDisplayValue, toggleDropdown, handleValue  } = useContext(SelectContext);
-
-	const handleSelect = () => {
-		handleDisplayValue(children);
-		toggleDropdown();
-		handleValue(value)
-	}
-	return <Box onClick={handleSelect}>{children}</Box>;
-};
+export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
+	(props, ref) => {
+		const { children, value, ...rest } = props;
+		const { handleDisplayValue, toggleDropdown, handleValue } =
+			useContext(SelectContext);
+		const handleSelect = () => {
+			handleDisplayValue(children);
+			toggleDropdown();
+			handleValue(value);
+		};
+		return <Box {...rest} ref={ref} onClick={handleSelect}>{children}</Box>;
+	},
+);

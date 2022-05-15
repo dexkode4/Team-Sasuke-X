@@ -1,4 +1,4 @@
-import { createContext, FC, useCallback, useMemo, useState } from 'react';
+import { createContext, useCallback, useMemo, useState } from 'react';
 
 export type Value = string | number;
 
