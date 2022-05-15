@@ -4,7 +4,7 @@ export type Value = string | number;
 
 type SelectContextState = {
 	isOpenDropdown: boolean;
-	toggleDropdown: () => void;
+	toggleDropdown: (value?: boolean) => void;
 	displayValue: React.ReactNode | null;
 	handleDisplayValue: (value: React.ReactNode) => void;
 	handleValue: (value: Value) => void;
@@ -37,9 +37,9 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 	);
 	const [value, setValue] = useState<Value>(contextDefaultValues.value);
 
-	const toggleDropdown = useCallback(() => {
-		setIsOpenDropdown(!isOpenDropdown);
-	}, [isOpenDropdown]);
+	const toggleDropdown = useCallback((value?: boolean) => {
+		setIsOpenDropdown((prev) => value ?? !prev);
+	}, []);
 
 	const handleDisplayValue = useCallback((value: React.ReactNode) => {
 		setDisplayValue(value);

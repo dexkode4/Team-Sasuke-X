@@ -12,11 +12,12 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 		const { children, value, ...rest } = props;
 		const { handleDisplayValue, toggleDropdown, handleValue } =
 			useContext(SelectContext);
+
 		const handleSelect = () => {
 			handleDisplayValue(children);
-			toggleDropdown();
+			toggleDropdown(false);
 			handleValue(value);
 		};
-		return <Box {...rest} ref={ref} onClick={handleSelect}>{children}</Box>;
+		return <Box {...rest} cursor='pointer' ref={ref} onClick={handleSelect}>{children}</Box>;
 	},
 );

@@ -1,13 +1,34 @@
+import React, { useContext, useEffect, useRef } from 'react';
+import { UpDownIcon } from '@chakra-ui/icons';
 import { Button, ButtonProps, forwardRef } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-import { SelectContext } from '../context';
+import { SelectContext, Value } from '../context';
 
 interface SelectButtonProps extends ButtonProps {
 	placeholder: string;
+	handleChange: (value: Value) => void;
 }
 
-export const SelectButton = forwardRef<SelectButtonProps, 'button'>((props) => {
-	const {placeholder} = props;
-	const { toggleDropdown, displayValue } = useContext(SelectContext);
-	return <Button onClick={toggleDropdown}>{displayValue ?? placeholder}</Button>;
-});
+export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
+	(props, _ref) => {
+		const { placeholder, handleChange, ...rest } = props;
+		const { toggleDropdown, displayValue, value } = useContext(SelectContext);
+		const componentJustMounted = useRef(true);
+
+		useEffect(() => {
+			if (!componentJustMounted.current) {
+				handleChange(value);
+			}
+			componentJustMounted.current = false;
+		}, [handleChange, value]);
+
+		return (
+			<Button
+				{...rest}
+				rightIcon={<UpDownIcon w={3} h={3} />}
+				onClick={() => toggleDropdown()}
+			>
+				{displayValue ?? placeholder}
+			</Button>
+		);
+	},
+);
