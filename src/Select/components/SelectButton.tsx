@@ -23,8 +23,12 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 
 		return (
 			<Button
-			bg="transparent"
-			borderWidth={1}
+				bg='transparent'
+				borderWidth={1}
+				fontSize='md'
+				display='flex'
+				justifyContent='space-between'
+				w='100%'
 				{...rest}
 				rightIcon={<ChevronDownIcon w={5} h={5} />}
 				onClick={() => toggleDropdown()}
