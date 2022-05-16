@@ -9,7 +9,7 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
-import { Loader } from './Loader';
+import { Loader, MotionBox } from './Loader';
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -22,6 +22,21 @@ type SelectButtonProps = Modify<
 	}
 >;
 
+export const rotate = {
+	rotate: {
+		rotate: -180,
+		transition: {
+			duration: .5,
+		},
+	},
+	default: {
+		rotate: 0,
+		transition: {
+			duration: .4,
+		},
+	},
+};
+
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
 		const { placeholder, icon, onChange, ...rest } = props;
@@ -33,6 +48,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 			handleDisplayValue,
 			handleValue,
 			isLoading,
+			isOpenDropdown
 		} = useContext(SelectContext);
 		const componentJustMounted = useRef(true);
 
@@ -106,7 +122,15 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 									<SmallCloseIcon />
 								</Box>
 							)}
-							{icon ?? <ChevronDownIcon w={5} h={5} />}
+							{icon ?? (
+								<MotionBox
+									variants={rotate}
+									initial='default'
+									animate={isOpenDropdown ? 'rotate' : 'default'}
+								>
+									<ChevronDownIcon w={5} h={5} />
+								</MotionBox>
+							)}
 						</>
 					)}
 				</Flex>
