@@ -10,7 +10,7 @@ interface SelectGroupProps {
 export const SelectGroup = ({ children, label, labelStyle }: SelectGroupProps) => {
 	return (
 		<Box>
-			<Heading size='sm' {...labelStyle}>{label}</Heading>
+			<Heading p={2} size='sm' textAlign='left' {...labelStyle}>{label}</Heading>
 			<Box>{children}</Box>
 		</Box>
 	);

@@ -29,7 +29,7 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 		useEffect(() => {}, []);
 
 		return (
-			<Box p={2} fontSize='md' {...rest} cursor='pointer' ref={ref} onClick={handleSelect}>
+			<Box p={2} fontSize='md' textAlign='left' {...rest} cursor='pointer' ref={ref} onClick={handleSelect}>
 				{children}
 			</Box>
 		);
