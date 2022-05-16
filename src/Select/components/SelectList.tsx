@@ -30,6 +30,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 		},
 		exit: {
 			opacity: 0,
+			y: -10,
 			transition: {
 				duration: 0.3,
 			},
