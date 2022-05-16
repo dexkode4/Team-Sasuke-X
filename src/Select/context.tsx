@@ -3,21 +3,31 @@ import { createContext, useCallback, useMemo, useState } from 'react';
 export type Value = string | number;
 
 type SelectContextState = {
-	isOpenDropdown: boolean;
 	toggleDropdown: (value?: boolean) => void;
-	displayValue: React.ReactNode | null;
 	handleDisplayValue: (value: React.ReactNode) => void;
 	handleValue: (value: Value) => void;
+	handleSelectOptionHeight: (value: number) => void;
+	handleSetItemCount: (value: number) => void;
+
+	isOpenDropdown: boolean;
+	displayValue: React.ReactNode | null;
 	value: Value;
+	optionHeight: number;
+	itemCount: number;
 };
 
 const contextDefaultValues: SelectContextState = {
-	isOpenDropdown: false,
 	toggleDropdown: () => {},
 	handleDisplayValue: () => {},
 	handleValue: () => {},
+	handleSelectOptionHeight: () => {},
+	handleSetItemCount: () => {},
+	
+	isOpenDropdown: false,
 	displayValue: null,
 	value: '',
+	optionHeight: 0,
+	itemCount: 0,
 };
 
 export const SelectContext =
@@ -36,6 +46,9 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 		contextDefaultValues.displayValue,
 	);
 	const [value, setValue] = useState<Value>(contextDefaultValues.value);
+	const [itemCount, setItemCount] = useState<number>(contextDefaultValues.itemCount);
+
+	const [optionHeight, setOptionHeight] = useState<number>(contextDefaultValues.optionHeight);
 
 	const toggleDropdown = useCallback((value?: boolean) => {
 		setIsOpenDropdown((prev) => value ?? !prev);
@@ -49,6 +62,13 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 		setValue(value);
 	}, []);
 
+	const handleSelectOptionHeight = useCallback((value: number) => {
+		setOptionHeight(value);
+	}, []);
+	const handleSetItemCount = useCallback((value: number) => {
+		setItemCount(value);
+	}, []);
+
 	const contextValues = useMemo(
 		() => ({
 			isOpenDropdown,
@@ -57,15 +77,12 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 			displayValue,
 			value,
 			handleValue,
+			optionHeight,
+			handleSelectOptionHeight,
+			itemCount,
+			handleSetItemCount
 		}),
-		[
-			displayValue,
-			handleDisplayValue,
-			handleValue,
-			isOpenDropdown,
-			toggleDropdown,
-			value,
-		],
+		[displayValue, handleDisplayValue, handleSelectOptionHeight, handleSetItemCount, handleValue, isOpenDropdown, itemCount, optionHeight, toggleDropdown, value],
 	);
 
 	return <Provider value={contextValues}>{children}</Provider>;

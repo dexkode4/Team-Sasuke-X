@@ -5,37 +5,37 @@ import { SelectContext } from '../context';
 
 interface SelectListProps extends BoxProps {
 	children: React.ReactNode;
+	itemCount?: number;
 }
 
 const MotionBox = motion<BoxProps>(Box);
 
-
 export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
-	const { children, ...rest } = props;
-	const { isOpenDropdown } = useContext(SelectContext);
+	const { children, itemCount, ...rest } = props;
+	const { isOpenDropdown, optionHeight } =
+		useContext(SelectContext);
 
 	const variant = {
 		hidden: {
 			opacity: 0,
-			y: -10
-			
+			y: -10,
 		},
 		visible: {
 			opacity: 1,
 			y: 0,
 			transition: {
-				duration: .3,
-				type: 'spring'
+				duration: 0.3,
+				type: 'spring',
 			},
 		},
 		exit: {
 			opacity: 0,
 			transition: {
-				duration: .3,
+				duration: 0.3,
 			},
-		}
+		},
 	};
-	return(
+	return (
 		<AnimatePresence>
 			{isOpenDropdown && (
 				<MotionBox
@@ -44,7 +44,15 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 					animate='visible'
 					exit='exit'
 				>
-					<Box bg='white' shadow='lg' {...rest}>
+					<Box
+						bg='white'
+						shadow='lg'
+						overflow='auto'
+						{...(itemCount && {
+							h: `${itemCount * optionHeight}px`,
+						})}
+						{...rest}
+					>
 						{children}
 					</Box>
 				</MotionBox>
