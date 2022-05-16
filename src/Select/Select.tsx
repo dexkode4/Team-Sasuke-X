@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { SelectContext, SelectProvider, Variant } from './context';
 import { SelectWrapper } from './components/SelectWrapper';
 import { BoxProps, forwardRef } from '@chakra-ui/react';
+export type Modify<T, R> = Omit<T, keyof R> & R;
 
 export interface SelectProps extends BoxProps {
 	children: React.ReactNode;

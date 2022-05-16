@@ -10,15 +10,26 @@ import {
 } from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
 
-interface SelectButtonProps extends ButtonProps {
-	placeholder: string;
-	handleChange: (value: Value) => void;
-	icon?: React.ReactNode;
-}
+export type Modify<T, R> = Omit<T, keyof R> & R;
+
+type SelectButtonProps = Modify<
+	ButtonProps,
+	{
+		placeholder: string;
+		icon?: React.ReactNode;
+		onChange: (value: Value) => void;
+	}
+>;
+
+// interface SelectButtonProps extends ButtonProps {
+// 	placeholder: string;
+// 	handleChange: (value: Value) => void;
+// 	icon?: React.ReactNode;
+// }
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const { placeholder, handleChange, icon, ...rest } = props;
+		const { placeholder, icon, onChange, ...rest } = props;
 		const {
 			toggleDropdown,
 			displayValue,
@@ -37,10 +48,10 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 
 		useEffect(() => {
 			if (!componentJustMounted.current) {
-				handleChange(value);
+				onChange(value)
 			}
 			componentJustMounted.current = false;
-		}, [handleChange, value]);
+		}, [onChange, value]);
 
 		const variants: Record<string, ButtonProps> = {
 			flushed: {
