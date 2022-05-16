@@ -9,7 +9,7 @@ export const App = () => {
 	return (
 		<ChakraProvider theme={theme}>
 			<Box textAlign='center' fontSize='xl' p={20}>
-				<Select w='300px'>
+				<Select w='300px' variant='outline'>
 					<SelectButton
 						handleChange={handleChange}
 						placeholder='Select option'

@@ -10,13 +10,17 @@ interface SelectOptionProps extends BoxProps {
 export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 	(props, _ref) => {
 		const { children, value, ...rest } = props;
-		const { handleDisplayValue, toggleDropdown, handleValue, handleSelectOptionHeight } =
-			useContext(SelectContext);
+		const {
+			handleDisplayValue,
+			toggleDropdown,
+			handleValue,
+			handleSelectOptionHeight,
+		} = useContext(SelectContext);
 		const ref = useRef<HTMLDivElement>(null);
 
 		useLayoutEffect(() => {
 			if (ref.current) {
-				handleSelectOptionHeight(ref.current.clientHeight)
+				handleSelectOptionHeight(ref.current.clientHeight);
 			}
 		}, [handleSelectOptionHeight, ref]);
 
@@ -29,7 +33,18 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 		useEffect(() => {}, []);
 
 		return (
-			<Box p={2} fontSize='md' textAlign='left' {...rest} cursor='pointer' ref={ref} onClick={handleSelect}>
+			<Box
+				p={2}
+				fontSize='md'
+				textAlign='left'
+				_hover={{
+					bg: 'gray.200',
+				}}
+				{...rest}
+				cursor='pointer'
+				ref={ref}
+				onClick={handleSelect}
+			>
 				{children}
 			</Box>
 		);
