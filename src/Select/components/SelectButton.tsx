@@ -4,8 +4,8 @@ import {
 	Box,
 	Button,
 	ButtonProps,
+	Flex,
 	forwardRef,
-	IconButton,
 	Text,
 } from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
@@ -29,7 +29,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 		} = useContext(SelectContext);
 		const componentJustMounted = useRef(true);
 
-		const handleClearField = (event: React.MouseEvent<HTMLButtonElement>) => {
+		const handleClearField = (event: React.MouseEvent<HTMLDivElement>) => {
 			event.stopPropagation();
 			handleDisplayValue(null);
 			handleValue('');
@@ -80,22 +80,23 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 				onClick={() => toggleDropdown()}
 			>
 				{displayValue ?? <Text opacity={0.5}>{placeholder}</Text>}
-				<Box>
+				<Flex>
 					{displayValue && (
-						<IconButton
-							p={0}
-							aria-label='clear field'
+						<Box
 							bg='transparent'
+							aria-label='clear field'
 							w='max-content'
 							_hover={{
 								color: 'red',
 							}}
 							onClick={handleClearField}
-							icon={<SmallCloseIcon />}
-						/>
+							mr={1}
+						>
+							<SmallCloseIcon />
+						</Box>
 					)}
 					{icon ?? <ChevronDownIcon w={5} h={5} />}
-				</Box>
+				</Flex>
 			</Button>
 		);
 	},
