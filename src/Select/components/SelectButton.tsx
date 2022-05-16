@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { UpDownIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, ButtonProps, forwardRef } from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
 
@@ -23,8 +23,10 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 
 		return (
 			<Button
+			bg="transparent"
+			borderWidth={1}
 				{...rest}
-				rightIcon={<UpDownIcon w={3} h={3} />}
+				rightIcon={<ChevronDownIcon w={4} h={4} />}
 				onClick={() => toggleDropdown()}
 			>
 				{displayValue ?? placeholder}
