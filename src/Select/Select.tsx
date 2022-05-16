@@ -1,5 +1,5 @@
-import React, { useContext, useLayoutEffect } from 'react';
-import { SelectContext, SelectProvider } from './context';
+import React from 'react';
+import { SelectProvider } from './context';
 import { SelectWrapper } from './components/SelectWrapper';
 
 export type variant = 'native' | 'outline' | 'filled' | 'flushed' | 'unstyled';

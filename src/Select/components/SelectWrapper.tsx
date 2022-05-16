@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext, useRef } from 'react';
 import { Box } from '@chakra-ui/react';
-import { useClickOutside } from 'react-justu';
 import { SelectContext } from '../context';
+import { useClickOutside } from '../hooks/use-click-outside';
 interface SelectWrapperProps {
 	children: ReactNode;
 }

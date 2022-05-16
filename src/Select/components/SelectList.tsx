@@ -22,7 +22,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 		},
 		visible: {
 			opacity: 1,
-			y: 0,
+			y: 5,
 			transition: {
 				duration: 0.3,
 				type: 'spring',

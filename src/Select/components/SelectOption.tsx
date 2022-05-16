@@ -16,7 +16,6 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 
 		useLayoutEffect(() => {
 			if (ref.current) {
-				console.log('ref.current.clientHeight', ref.current.clientHeight)
 				handleSelectOptionHeight(ref.current.clientHeight)
 			}
 		}, [handleSelectOptionHeight, ref]);
