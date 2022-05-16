@@ -6,11 +6,12 @@ import { SelectContext, Value } from '../context';
 interface SelectButtonProps extends ButtonProps {
 	placeholder: string;
 	handleChange: (value: Value) => void;
+	icon?: React.ReactNode;
 }
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const { placeholder, handleChange, ...rest } = props;
+		const { placeholder, handleChange, icon, ...rest } = props;
 		const { toggleDropdown, displayValue, value } = useContext(SelectContext);
 		const componentJustMounted = useRef(true);
 
@@ -30,10 +31,11 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 				justifyContent='space-between'
 				w='100%'
 				{...rest}
-				rightIcon={<ChevronDownIcon w={5} h={5} />}
 				onClick={() => toggleDropdown()}
 			>
 				{displayValue ?? placeholder}
+
+				{icon ?? <ChevronDownIcon w={5} h={5} />}
 			</Button>
 		);
 	},
