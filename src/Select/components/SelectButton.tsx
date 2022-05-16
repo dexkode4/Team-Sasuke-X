@@ -9,6 +9,7 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
+import { Loader } from './Loader';
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -21,12 +22,6 @@ type SelectButtonProps = Modify<
 	}
 >;
 
-// interface SelectButtonProps extends ButtonProps {
-// 	placeholder: string;
-// 	handleChange: (value: Value) => void;
-// 	icon?: React.ReactNode;
-// }
-
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
 		const { placeholder, icon, onChange, ...rest } = props;
@@ -37,6 +32,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 			variant,
 			handleDisplayValue,
 			handleValue,
+			isLoading,
 		} = useContext(SelectContext);
 		const componentJustMounted = useRef(true);
 
@@ -48,7 +44,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 
 		useEffect(() => {
 			if (!componentJustMounted.current) {
-				onChange(value)
+				onChange(value);
 			}
 			componentJustMounted.current = false;
 		}, [onChange, value]);
@@ -91,22 +87,28 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 				onClick={() => toggleDropdown()}
 			>
 				{displayValue ?? <Text opacity={0.5}>{placeholder}</Text>}
-				<Flex>
-					{displayValue && (
-						<Box
-							bg='transparent'
-							aria-label='clear field'
-							w='max-content'
-							_hover={{
-								color: 'red',
-							}}
-							onClick={handleClearField}
-							mr={1}
-						>
-							<SmallCloseIcon />
-						</Box>
+				<Flex alignItems='center'>
+					{isLoading ? (
+						<Loader />
+					) : (
+						<>
+							{displayValue && (
+								<Box
+									bg='transparent'
+									aria-label='clear field'
+									w='max-content'
+									_hover={{
+										color: 'red',
+									}}
+									onClick={handleClearField}
+									mr={1}
+								>
+									<SmallCloseIcon />
+								</Box>
+							)}
+							{icon ?? <ChevronDownIcon w={5} h={5} />}
+						</>
 					)}
-					{icon ?? <ChevronDownIcon w={5} h={5} />}
 				</Flex>
 			</Button>
 		);

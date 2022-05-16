@@ -9,12 +9,14 @@ type SelectContextState = {
 	handleValue: (value: Value) => void;
 	handleSelectOptionHeight: (value: number) => void;
 	handleVariant: (variant: Variant) => void;
+	handleLoading: (variant: boolean) => void;
 
 	isOpenDropdown: boolean;
 	displayValue: React.ReactNode | null;
 	value: Value;
 	optionHeight: number;
 	variant: Variant;
+	isLoading: boolean;
 };
 
 const contextDefaultValues: SelectContextState = {
@@ -23,8 +25,10 @@ const contextDefaultValues: SelectContextState = {
 	handleValue: () => {},
 	handleSelectOptionHeight: () => {},
 	handleVariant: () => {},
+	handleLoading: () => {},
 	
 	isOpenDropdown: false,
+	isLoading: false,
 	displayValue: null,
 	value: '',
 	optionHeight: 0,
@@ -51,6 +55,8 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 	const [optionHeight, setOptionHeight] = useState<number>(contextDefaultValues.optionHeight);
 	const [variant, setVariant] = useState<Variant>(contextDefaultValues.variant);
 
+	const [isLoading, setIsLoading] = useState<boolean>(contextDefaultValues.isLoading);
+
 	const toggleDropdown = useCallback((value?: boolean) => {
 		setIsOpenDropdown((prev) => value ?? !prev);
 	}, []);
@@ -69,7 +75,10 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 
 	const handleVariant = useCallback((value: Variant) => {
 		setVariant(value);
-		console.log('hey')
+	}, []);
+
+	const handleLoading = useCallback((value: boolean) => {
+		setIsLoading(value);
 	}, []);
 
 
@@ -80,14 +89,16 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 			handleVariant,
 			handleValue,
 			toggleDropdown,
+			handleLoading,
 			
 			displayValue,
 			value,
 			isOpenDropdown,
 			optionHeight,
-			variant
+			variant,
+			isLoading
 		}),
-		[displayValue, handleDisplayValue, handleSelectOptionHeight, handleValue, handleVariant, isOpenDropdown, optionHeight, toggleDropdown, value, variant],
+		[displayValue, handleDisplayValue, handleLoading, handleSelectOptionHeight, handleValue, handleVariant, isLoading, isOpenDropdown, optionHeight, toggleDropdown, value, variant],
 	);
 
 	return <Provider value={contextValues}>{children}</Provider>;

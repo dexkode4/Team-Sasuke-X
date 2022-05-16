@@ -5,17 +5,22 @@ import { useClickOutside } from '../hooks/use-click-outside';
 interface SelectWrapperProps extends BoxProps {
 	children: ReactNode;
 	variant?: Variant;
+	isLoading?: boolean;
 }
 
 export const SelectWrapper = forwardRef<SelectWrapperProps, 'div'>(
 	(props, _ref) => {
-		const { children, variant, ...rest } = props;
+		const { children, variant, isLoading, ...rest } = props;
 		const wrapperRef = useRef(null);
-		const { toggleDropdown, handleVariant } = useContext(SelectContext);
+		const { toggleDropdown, handleVariant, handleLoading } = useContext(SelectContext);
 
 		useEffect(() => {
 			variant && handleVariant(variant);
 		}, [handleVariant, variant]);
+
+		useEffect(() => {
+			isLoading && handleLoading(isLoading);
+		}, [handleLoading, isLoading]);
 
 		const doSomething = () => {
 			toggleDropdown(false);
