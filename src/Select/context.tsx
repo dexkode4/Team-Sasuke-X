@@ -69,6 +69,7 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 
 	const handleVariant = useCallback((value: Variant) => {
 		setVariant(value);
+		console.log('hey')
 	}, []);
 
 
