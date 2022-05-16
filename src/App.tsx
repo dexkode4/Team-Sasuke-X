@@ -15,7 +15,10 @@ export const App = () => {
 						placeholder='Select option'
 					/>
 					<SelectList>
-						<SelectOption value={1}>Option 1</SelectOption>
+						<SelectOption _hover={{
+							bg: 'orange',
+							color: 'white'
+						}} value={1}>Option 1</SelectOption>
 						<SelectOption value={2}>Option 2</SelectOption>
 						<SelectOption value={3}>Option 3</SelectOption>
 
