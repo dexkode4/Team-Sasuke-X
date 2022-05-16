@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Button, ButtonProps, forwardRef } from '@chakra-ui/react';
+import { Button, ButtonProps, forwardRef, Text } from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
 
 interface SelectButtonProps extends ButtonProps {
@@ -33,7 +33,8 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 				{...rest}
 				onClick={() => toggleDropdown()}
 			>
-				{displayValue ?? placeholder}
+				{displayValue ?? <Text opacity={0.5}>{placeholder}</Text>}
+				
 
 				{icon ?? <ChevronDownIcon w={5} h={5} />}
 			</Button>
