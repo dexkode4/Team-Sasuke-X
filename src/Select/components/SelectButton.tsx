@@ -91,7 +91,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 		return (
 			<Button
 				fontSize='md'
-				display='flex'
+				display={variant === 'native' ? 'none' : 'flex'}
 				justifyContent='space-between'
 				w='100%'
 				{...(variant === 'filled'

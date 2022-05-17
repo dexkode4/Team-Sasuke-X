@@ -1,4 +1,4 @@
-import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
+import { Box, BoxProps, forwardRef, Select } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useContext } from 'react';
 import { SelectContext } from '../context';
@@ -12,10 +12,9 @@ const MotionBox = motion<BoxProps>(Box);
 
 export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 	const { children, itemCount, ...rest } = props;
-	const { isOpenDropdown, optionHeight } =
-		useContext(SelectContext);
+	const { isOpenDropdown, optionHeight, variant } = useContext(SelectContext);
 
-	const variant = {
+	const dropdownVariant = {
 		hidden: {
 			opacity: 0,
 			y: -10,
@@ -36,11 +35,16 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 			},
 		},
 	};
-	return (
+
+	const NativeSelect = <Select>{children}</Select>;
+
+	return variant === 'native' ? (
+		NativeSelect
+	) : (
 		<AnimatePresence>
 			{isOpenDropdown && (
 				<MotionBox
-					variants={variant}
+					variants={dropdownVariant}
 					initial='hidden'
 					animate='visible'
 					exit='exit'

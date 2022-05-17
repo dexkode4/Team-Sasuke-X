@@ -1,16 +1,27 @@
 import { Box, Heading, HeadingProps } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
+import { SelectContext } from '../context';
 
 interface SelectGroupProps {
 	children: React.ReactNode;
 	label: string;
-    labelStyle?: HeadingProps;
+	labelStyle?: HeadingProps;
 }
 
-export const SelectGroup = ({ children, label, labelStyle }: SelectGroupProps) => {
-	return (
+export const SelectGroup = ({
+	children,
+	label,
+	labelStyle,
+}: SelectGroupProps) => {
+	const { variant } = useContext(SelectContext);
+	const NativeSelectGroup = <optgroup label={label}>{children}</optgroup>;
+	return variant === 'native' ? (
+		NativeSelectGroup
+	) : (
 		<Box>
-			<Heading p={2} size='sm' textAlign='left' {...labelStyle}>{label}</Heading>
+			<Heading p={2} size='sm' textAlign='left' {...labelStyle}>
+				{label}
+			</Heading>
 			<Box>{children}</Box>
 		</Box>
 	);
