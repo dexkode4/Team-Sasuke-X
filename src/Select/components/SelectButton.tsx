@@ -1,39 +1,140 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Button, ButtonProps, forwardRef } from '@chakra-ui/react';
+import { ChevronDownIcon, SmallCloseIcon } from '@chakra-ui/icons';
+import {
+	Box,
+	Button,
+	ButtonProps,
+	Flex,
+	forwardRef,
+	Text,
+} from '@chakra-ui/react';
 import { SelectContext, Value } from '../context';
+import { Loader, MotionBox } from './Loader';
 
-interface SelectButtonProps extends ButtonProps {
-	placeholder: string;
-	handleChange: (value: Value) => void;
-}
+export type Modify<T, R> = Omit<T, keyof R> & R;
+
+type SelectButtonProps = Modify<
+	ButtonProps,
+	{
+		placeholder: string;
+		icon?: React.ReactNode;
+		onChange: (value: Value) => void;
+	}
+>;
+
+export const rotate = {
+	rotate: {
+		rotate: -180,
+		transition: {
+			duration: .5,
+		},
+	},
+	default: {
+		rotate: 0,
+		transition: {
+			duration: .4,
+		},
+	},
+};
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const { placeholder, handleChange, ...rest } = props;
-		const { toggleDropdown, displayValue, value } = useContext(SelectContext);
+		const { placeholder, icon, onChange, ...rest } = props;
+		const {
+			toggleDropdown,
+			displayValue,
+			value,
+			variant,
+			handleDisplayValue,
+			handleValue,
+			isLoading,
+			isOpenDropdown
+		} = useContext(SelectContext);
 		const componentJustMounted = useRef(true);
+
+		const handleClearField = (event: React.MouseEvent<HTMLDivElement>) => {
+			event.stopPropagation();
+			handleDisplayValue(null);
+			handleValue('');
+		};
 
 		useEffect(() => {
 			if (!componentJustMounted.current) {
-				handleChange(value);
+				onChange(value);
 			}
 			componentJustMounted.current = false;
-		}, [handleChange, value]);
+		}, [onChange, value]);
+
+		const variants: Record<string, ButtonProps> = {
+			flushed: {
+				bg: 'transparent',
+				borderBottomWidth: 2,
+				borderRadius: 0,
+				_hover: {
+					borderBottomColor: '#3182CE',
+				},
+				_focus: {
+					borderBottomColor: '#3182CE',
+				},
+			},
+			filled: {
+				variant: 'solid',
+			},
+			unstyled: {
+				variant: 'unstyled',
+			},
+			outline: {
+				variant: 'outline',
+			},
+		};
 
 		return (
 			<Button
-				bg='transparent'
-				borderWidth={1}
 				fontSize='md'
 				display='flex'
 				justifyContent='space-between'
 				w='100%'
+				{...(variant === 'filled'
+					? {
+							variant: 'solid',
+					  }
+					: { ...variants[variant] })}
 				{...rest}
-				rightIcon={<ChevronDownIcon w={5} h={5} />}
+				// rightIcon={<ChevronDownIcon w={5} h={5} />}
 				onClick={() => toggleDropdown()}
 			>
-				{displayValue ?? placeholder}
+				{displayValue ?? <Text opacity={0.5}>{placeholder}</Text>}
+				<Flex alignItems='center'>
+					{isLoading ? (
+						<Loader />
+					) : (
+						<>
+							{displayValue && (
+								<Box
+									bg='transparent'
+									aria-label='clear field'
+									w='max-content'
+									_hover={{
+										color: 'red',
+									}}
+									onClick={handleClearField}
+									mr={1}
+								>
+									<SmallCloseIcon />
+								</Box>
+							)}
+							{icon ?? (
+								<MotionBox
+									variants={rotate}
+									initial='default'
+									animate={isOpenDropdown ? 'rotate' : 'default'}
+								>
+									<ChevronDownIcon w={5} h={5} />
+								</MotionBox>
+							)}
+						</>
+					)}
+				</Flex>
 			</Button>
 		);
 	},

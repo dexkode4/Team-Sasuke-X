@@ -5,17 +5,22 @@ import { SelectButton } from './Select/components/SelectButton';
 import { Value } from './Select/context';
 
 export const App = () => {
-	const handleChange = (value: Value) => {};
+	const handleChange = (value: Value) => {
+		console.log(value)
+	};
 	return (
 		<ChakraProvider theme={theme}>
 			<Box textAlign='center' fontSize='xl' p={20}>
-				<Select w='300px'>
+				<Select w='300px' variant='outline'>
 					<SelectButton
-						handleChange={handleChange}
+						onChange={handleChange}
 						placeholder='Select option'
 					/>
 					<SelectList>
-						<SelectOption value={1}>Option 1</SelectOption>
+						<SelectOption _hover={{
+							bg: 'orange',
+							color: 'white'
+						}} value={1}>Option 1</SelectOption>
 						<SelectOption value={2}>Option 2</SelectOption>
 						<SelectOption value={3}>Option 3</SelectOption>
 

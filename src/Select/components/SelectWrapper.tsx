@@ -1,16 +1,26 @@
-import React, { ReactNode, useContext, useRef } from 'react';
+import React, { ReactNode, useContext, useEffect, useRef } from 'react';
 import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
-import { SelectContext } from '../context';
+import { SelectContext, Variant } from '../context';
 import { useClickOutside } from '../hooks/use-click-outside';
 interface SelectWrapperProps extends BoxProps {
 	children: ReactNode;
+	variant?: Variant;
+	isLoading?: boolean;
 }
 
 export const SelectWrapper = forwardRef<SelectWrapperProps, 'div'>(
 	(props, _ref) => {
-		const { children, ...rest } = props;
+		const { children, variant, isLoading, ...rest } = props;
 		const wrapperRef = useRef(null);
-		const { toggleDropdown } = useContext(SelectContext);
+		const { toggleDropdown, handleVariant, handleLoading } = useContext(SelectContext);
+
+		useEffect(() => {
+			variant && handleVariant(variant);
+		}, [handleVariant, variant]);
+
+		useEffect(() => {
+			isLoading && handleLoading(isLoading);
+		}, [handleLoading, isLoading]);
 
 		const doSomething = () => {
 			toggleDropdown(false);
