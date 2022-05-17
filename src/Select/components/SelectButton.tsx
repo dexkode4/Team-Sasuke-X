@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ChevronDownIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {
 	Box,
@@ -17,6 +17,7 @@ type SelectButtonProps = Modify<
 	ButtonProps,
 	{
 		icon?: React.ReactNode;
+		onOpen?: (value: boolean) => void
 	}
 >;
 
@@ -37,7 +38,7 @@ export const rotate = {
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const {icon, onSelect, ...rest } = props;
+		const {icon, onSelect,onOpen, ...rest } = props;
 		const {
 			toggleDropdown,
 			displayValue,
@@ -77,6 +78,10 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 				variant: 'outline',
 			},
 		};
+
+		useEffect(() => {
+			onOpen && onOpen(isOpenDropdown)
+		},[isOpenDropdown, onOpen])
 
 		return (
 			<Button
