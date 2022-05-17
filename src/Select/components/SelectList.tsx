@@ -5,20 +5,19 @@ import { SelectContext, Value } from "../context";
 import { Modify } from "./SelectButton";
 
 type SelectListProps = Modify<
-  BoxProps,
-  {
-    children: React.ReactNode;
-    itemCount?: number;
-    onChange?: (value: Value) => void;
-  }
+	BoxProps,
+	{
+		children: React.ReactNode;
+		itemCount?: number;
+		onSelect?: (value: Value) => void;
+	}
 >;
 
 const MotionBox = motion<BoxProps>(Box);
 
-export const SelectList = forwardRef<SelectListProps, "div">((props, _ref) => {
-  const { children, itemCount, onChange, ...rest } = props;
-  const { isOpenDropdown, optionHeight, variant, placeholder } =
-    useContext(SelectContext);
+export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
+	const { children, itemCount, onChange,onSelect, ...rest } = props;
+	const { isOpenDropdown, optionHeight, variant, placeholder } = useContext(SelectContext);
 
   const dropdownVariant = {
     hidden: {
@@ -42,10 +41,10 @@ export const SelectList = forwardRef<SelectListProps, "div">((props, _ref) => {
     },
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.target;
-    onChange && onChange(value);
-  };
+	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		const { value } = event.target;
+		onSelect && onSelect(value);
+	};
 
   const NativeSelect = () => (
     <Select onChange={handleChange}>
