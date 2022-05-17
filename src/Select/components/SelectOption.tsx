@@ -1,5 +1,5 @@
 import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
-import React, { useContext, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useContext, useLayoutEffect, useRef } from 'react';
 import { SelectContext, Value } from '../context';
 
 interface SelectOptionProps extends BoxProps {
@@ -15,6 +15,7 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 			toggleDropdown,
 			handleValue,
 			handleSelectOptionHeight,
+			variant,
 		} = useContext(SelectContext);
 		const ref = useRef<HTMLDivElement>(null);
 
@@ -30,9 +31,11 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 			handleValue(value);
 		};
 
-		useEffect(() => {}, []);
+		const NativeSelectOption = <option value={value}>{children}</option>;
 
-		return (
+		return variant === 'native' ? (
+			NativeSelectOption
+		) : (
 			<Box
 				p={2}
 				fontSize='md'

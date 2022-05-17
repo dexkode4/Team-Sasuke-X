@@ -7,14 +7,15 @@ export interface SelectProps extends BoxProps {
 	children: React.ReactNode;
 	variant?: Variant;
 	isLoading?: boolean;
+	placeholder?: string;
 }
 
 export const Select = forwardRef<SelectProps, 'div'>((props, _ref) => {
-	const { children, variant, ...rest } = props;
+	const { children, variant,placeholder, ...rest } = props;
 
 	return (
 		<SelectProvider>
-			<SelectWrapper variant={variant} {...rest}>
+			<SelectWrapper placeholder={placeholder} variant={variant} {...rest}>
 				{children}
 			</SelectWrapper>
 		</SelectProvider>

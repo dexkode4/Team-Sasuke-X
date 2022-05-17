@@ -16,7 +16,6 @@ export type Modify<T, R> = Omit<T, keyof R> & R;
 type SelectButtonProps = Modify<
 	ButtonProps,
 	{
-		placeholder: string;
 		icon?: React.ReactNode;
 		onChange: (value: Value) => void;
 	}
@@ -39,7 +38,7 @@ export const rotate = {
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const { placeholder, icon, onChange, ...rest } = props;
+		const {icon, onChange, ...rest } = props;
 		const {
 			toggleDropdown,
 			displayValue,
@@ -48,7 +47,8 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 			handleDisplayValue,
 			handleValue,
 			isLoading,
-			isOpenDropdown
+			isOpenDropdown,
+			placeholder
 		} = useContext(SelectContext);
 		const componentJustMounted = useRef(true);
 
@@ -91,7 +91,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 		return (
 			<Button
 				fontSize='md'
-				display='flex'
+				display={variant === 'native' ? 'none' : 'flex'}
 				justifyContent='space-between'
 				w='100%'
 				{...(variant === 'filled'

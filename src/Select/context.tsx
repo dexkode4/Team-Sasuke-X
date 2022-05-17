@@ -9,7 +9,8 @@ type SelectContextState = {
 	handleValue: (value: Value) => void;
 	handleSelectOptionHeight: (value: number) => void;
 	handleVariant: (variant: Variant) => void;
-	handleLoading: (variant: boolean) => void;
+	handleLoading: (value: boolean) => void;
+	handlePlaceholder: (value: string) => void;
 
 	isOpenDropdown: boolean;
 	displayValue: React.ReactNode | null;
@@ -17,6 +18,7 @@ type SelectContextState = {
 	optionHeight: number;
 	variant: Variant;
 	isLoading: boolean;
+	placeholder:string;
 };
 
 const contextDefaultValues: SelectContextState = {
@@ -26,13 +28,15 @@ const contextDefaultValues: SelectContextState = {
 	handleSelectOptionHeight: () => {},
 	handleVariant: () => {},
 	handleLoading: () => {},
+	handlePlaceholder: () => {},
 	
 	isOpenDropdown: false,
 	isLoading: false,
 	displayValue: null,
 	value: '',
 	optionHeight: 0,
-	variant: 'outline'
+	variant: 'outline',
+	placeholder: ''
 };
 
 export const SelectContext =
@@ -56,6 +60,7 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 	const [variant, setVariant] = useState<Variant>(contextDefaultValues.variant);
 
 	const [isLoading, setIsLoading] = useState<boolean>(contextDefaultValues.isLoading);
+	const [placeholder, setPlaceholder] = useState<string>(contextDefaultValues.placeholder);
 
 	const toggleDropdown = useCallback((value?: boolean) => {
 		setIsOpenDropdown((prev) => value ?? !prev);
@@ -81,6 +86,10 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 		setIsLoading(value);
 	}, []);
 
+	const handlePlaceholder = useCallback((value: string) => {
+		setPlaceholder(value);
+	}, []);
+
 
 	const contextValues = useMemo(
 		() => ({
@@ -90,15 +99,17 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 			handleValue,
 			toggleDropdown,
 			handleLoading,
+			handlePlaceholder,
 			
 			displayValue,
 			value,
 			isOpenDropdown,
 			optionHeight,
 			variant,
-			isLoading
+			isLoading,
+			placeholder
 		}),
-		[displayValue, handleDisplayValue, handleLoading, handleSelectOptionHeight, handleValue, handleVariant, isLoading, isOpenDropdown, optionHeight, toggleDropdown, value, variant],
+		[displayValue, handleDisplayValue, handleLoading, handlePlaceholder, handleSelectOptionHeight, handleValue, handleVariant, isLoading, isOpenDropdown, optionHeight, placeholder, toggleDropdown, value, variant],
 	);
 
 	return <Provider value={contextValues}>{children}</Provider>;
