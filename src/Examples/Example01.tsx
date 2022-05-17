@@ -5,8 +5,8 @@ import {
 	SelectList,
 	SelectGroup,
 	SelectButton,
+	Value
 } from '../Select';
-import { Value } from '../Select/context';
 
 export const Example01 = () => {
 	const handleChange = (value: Value) => {

@@ -1,7 +1,5 @@
 import { createContext, useCallback, useMemo, useState } from 'react';
-
-export type Value = string | number;
-export type Variant = 'native' | 'outline' | 'filled' | 'flushed' | 'unstyled';
+import { Value, Variant } from '.';
 
 type SelectContextState = {
 	toggleDropdown: (value?: boolean) => void;

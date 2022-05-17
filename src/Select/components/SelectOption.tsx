@@ -1,7 +1,8 @@
 import { CheckIcon } from '@chakra-ui/icons';
 import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
 import React, { useContext, useLayoutEffect, useMemo, useRef } from 'react';
-import { SelectContext, Value } from '../context';
+import { Value } from '..';
+import { SelectContext } from '../context';
 
 interface SelectOptionProps extends BoxProps {
 	children: React.ReactNode;

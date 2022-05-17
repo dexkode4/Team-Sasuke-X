@@ -8,7 +8,7 @@ import {
 	Value
 } from '../Select';
 
-export const Example02 = () => {
+export const Example03 = () => {
 	const [isOpen, setIsOpen] = React.useState(false);
 
 	const handleChange = (value: Value) => {
@@ -24,7 +24,7 @@ export const Example02 = () => {
 		return isOpen ? <>👆</> : <>👇</>;
 	};
 	return (
-		<Select placeholder='Select option' w='300px' variant='outline'>
+		<Select placeholder='Select option' w='300px' variant='native'>
 			<SelectButton icon={<ButtonIcon />} onOpen={handleOpen} />
 			<SelectList onSelect={handleChange}>
 				<SelectOption

@@ -1,7 +1,8 @@
 import { Box, BoxProps, forwardRef, Select } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useContext, useEffect } from 'react';
-import { SelectContext, Value } from '../context';
+import { Value } from '..';
+import { SelectContext } from '../context';
 import { Modify } from './SelectButton';
 
 type SelectListProps = Modify<

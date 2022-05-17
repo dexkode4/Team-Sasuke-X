@@ -1,7 +1,8 @@
 import React from 'react';
-import { SelectProvider, Variant } from './context';
+import { SelectProvider } from './context';
 import { SelectWrapper } from './components/SelectWrapper';
 import { BoxProps, forwardRef } from '@chakra-ui/react';
+import { Variant } from '.';
 
 export interface SelectProps extends BoxProps {
 	children: React.ReactNode;
