@@ -11,6 +11,7 @@ type SelectContextState = {
 	handleVariant: (variant: Variant) => void;
 	handleLoading: (value: boolean) => void;
 	handlePlaceholder: (value: string) => void;
+	handleItemCount: (value: number) => void;
 
 	isOpenDropdown: boolean;
 	displayValue: React.ReactNode | null;
@@ -19,6 +20,7 @@ type SelectContextState = {
 	variant: Variant;
 	isLoading: boolean;
 	placeholder:string;
+	itemCount: number | null;
 };
 
 const contextDefaultValues: SelectContextState = {
@@ -26,6 +28,7 @@ const contextDefaultValues: SelectContextState = {
 	handleDisplayValue: () => {},
 	handleValue: () => {},
 	handleSelectOptionHeight: () => {},
+	handleItemCount: () => {},
 	handleVariant: () => {},
 	handleLoading: () => {},
 	handlePlaceholder: () => {},
@@ -35,6 +38,7 @@ const contextDefaultValues: SelectContextState = {
 	displayValue: null,
 	value: '',
 	optionHeight: 0,
+	itemCount: null,
 	variant: 'outline',
 	placeholder: ''
 };
@@ -61,6 +65,7 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 
 	const [isLoading, setIsLoading] = useState<boolean>(contextDefaultValues.isLoading);
 	const [placeholder, setPlaceholder] = useState<string>(contextDefaultValues.placeholder);
+	const [itemCount, setItemCount] = useState<number|null>(contextDefaultValues.itemCount);
 
 	const toggleDropdown = useCallback((value?: boolean) => {
 		setIsOpenDropdown((prev) => value ?? !prev);
@@ -90,6 +95,10 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 		setPlaceholder(value);
 	}, []);
 
+	const handleItemCount = useCallback((value: number) => {
+		setItemCount(value);
+	}, []);
+
 
 	const contextValues = useMemo(
 		() => ({
@@ -100,6 +109,7 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 			toggleDropdown,
 			handleLoading,
 			handlePlaceholder,
+			handleItemCount,
 			
 			displayValue,
 			value,
@@ -107,9 +117,10 @@ export const SelectProvider = ({ children }: SelectProviderProps) => {
 			optionHeight,
 			variant,
 			isLoading,
-			placeholder
+			placeholder,
+			itemCount
 		}),
-		[displayValue, handleDisplayValue, handleLoading, handlePlaceholder, handleSelectOptionHeight, handleValue, handleVariant, isLoading, isOpenDropdown, optionHeight, placeholder, toggleDropdown, value, variant],
+		[displayValue, handleDisplayValue, handleItemCount, handleLoading, handlePlaceholder, handleSelectOptionHeight, handleValue, handleVariant, isLoading, isOpenDropdown, itemCount, optionHeight, placeholder, toggleDropdown, value, variant],
 	);
 
 	return <Provider value={contextValues}>{children}</Provider>;

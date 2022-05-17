@@ -8,7 +8,6 @@ type SelectListProps = Modify<
 	BoxProps,
 	{
 		children: React.ReactNode;
-		itemCount?: number;
 		onSelect: (value: Value) => void;
 	}
 >;
@@ -16,8 +15,8 @@ type SelectListProps = Modify<
 const MotionBox = motion<BoxProps>(Box);
 
 export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
-	const { children, itemCount, onChange, onSelect, ...rest } = props;
-	const { isOpenDropdown, optionHeight, variant, placeholder, value } =
+	const { children, onChange, onSelect, ...rest } = props;
+	const { isOpenDropdown, optionHeight, variant, placeholder, value, itemCount } =
 		useContext(SelectContext);
 
   const dropdownVariant = {
@@ -81,7 +80,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
             shadow="lg"
             overflow="auto"
             maxH={`calc(60vh - ${heightFromTop}px)`}
-            {...(itemCount && {
+            {...((itemCount) && {
               h: `${itemCount * optionHeight}px`,
             })}
             {...rest}

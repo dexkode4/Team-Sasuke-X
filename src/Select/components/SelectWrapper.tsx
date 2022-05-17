@@ -7,17 +7,23 @@ interface SelectWrapperProps extends BoxProps {
 	variant?: Variant;
 	isLoading?: boolean;
 	placeholder?: string;
+	itemCount?: number;
 }
 
 export const SelectWrapper = forwardRef<SelectWrapperProps, 'div'>(
 	(props, _ref) => {
-		const { children, variant, isLoading,placeholder, ...rest } = props;
+		const { children, variant, isLoading, placeholder, itemCount, ...rest } = props;
 		const wrapperRef = useRef(null);
-		const { toggleDropdown, handleVariant, handleLoading , handlePlaceholder} = useContext(SelectContext);
+		const { toggleDropdown, handleVariant, handleLoading, handlePlaceholder, handleItemCount } =
+			useContext(SelectContext);
 
 		useEffect(() => {
 			variant && handleVariant(variant);
 		}, [handleVariant, variant]);
+
+		useEffect(() => {
+			itemCount && handleItemCount(itemCount);
+		}, [itemCount, handleItemCount]);
 
 		useEffect(() => {
 			isLoading && handleLoading(isLoading);
