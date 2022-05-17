@@ -17,11 +17,14 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 			handleValue,
 			handleSelectOptionHeight,
 			variant,
-			value : selectedValue
+			value: selectedValue,
 		} = useContext(SelectContext);
 		const ref = useRef<HTMLDivElement>(null);
 
-		const isActive = useMemo(() => selectedValue === value, [selectedValue, value])
+		const isActive = useMemo(
+			() => selectedValue === value,
+			[selectedValue, value],
+		);
 
 		useLayoutEffect(() => {
 			if (ref.current) {
@@ -52,7 +55,7 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 				ref={ref}
 				onClick={handleSelect}
 			>
-				{isActive && <CheckIcon mr={1}/>}
+				{isActive && <CheckIcon mr={1} />}
 				{children}
 			</Box>
 		);
