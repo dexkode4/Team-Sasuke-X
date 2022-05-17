@@ -17,7 +17,7 @@ type SelectButtonProps = Modify<
 	ButtonProps,
 	{
 		icon?: React.ReactNode;
-		onChange: (value: Value) => void;
+		onSelect: (value: Value) => void;
 	}
 >;
 
@@ -38,7 +38,7 @@ export const rotate = {
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const {icon, onChange, ...rest } = props;
+		const {icon, onSelect, ...rest } = props;
 		const {
 			toggleDropdown,
 			displayValue,
@@ -60,10 +60,10 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 
 		useEffect(() => {
 			if (!componentJustMounted.current) {
-				onChange(value);
+				onSelect(value);
 			}
 			componentJustMounted.current = false;
-		}, [onChange, value]);
+		}, [onSelect, value]);
 
 		const variants: Record<string, ButtonProps> = {
 			flushed: {

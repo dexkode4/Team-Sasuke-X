@@ -9,14 +9,14 @@ type SelectListProps = Modify<
 	{
 		children: React.ReactNode;
 		itemCount?: number;
-		onChange?: (value: Value) => void;
+		onSelect?: (value: Value) => void;
 	}
 >;
 
 const MotionBox = motion<BoxProps>(Box);
 
 export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
-	const { children, itemCount, onChange, ...rest } = props;
+	const { children, itemCount, onChange,onSelect, ...rest } = props;
 	const { isOpenDropdown, optionHeight, variant, placeholder } = useContext(SelectContext);
 
 	const dropdownVariant = {
@@ -43,7 +43,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const { value } = event.target;
-		onChange && onChange(value);
+		onSelect && onSelect(value);
 	};
 
 	const NativeSelect = () => (

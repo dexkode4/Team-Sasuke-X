@@ -13,9 +13,9 @@ export const App = () => {
 			<Box textAlign='center' fontSize='xl' p={20}>
 				<Select placeholder='Select option' w='300px' variant='native'>
 					<SelectButton
-						onChange={handleChange}
+						onSelect={handleChange}
 					/>
-					<SelectList onChange={handleChange}>
+					<SelectList onSelect={handleChange}>
 						<SelectOption _hover={{
 							bg: 'orange',
 							color: 'white'
