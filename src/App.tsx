@@ -11,10 +11,9 @@ export const App = () => {
 	return (
 		<ChakraProvider theme={theme}>
 			<Box textAlign='center' fontSize='xl' p={20}>
-				<Select w='300px' variant='native'>
+				<Select placeholder='Select option' w='300px' variant='native'>
 					<SelectButton
 						onChange={handleChange}
-						placeholder='Select option'
 					/>
 					<SelectList onChange={handleChange}>
 						<SelectOption _hover={{

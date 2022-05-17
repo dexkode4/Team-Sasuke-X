@@ -17,7 +17,7 @@ const MotionBox = motion<BoxProps>(Box);
 
 export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 	const { children, itemCount, onChange, ...rest } = props;
-	const { isOpenDropdown, optionHeight, variant } = useContext(SelectContext);
+	const { isOpenDropdown, optionHeight, variant, placeholder } = useContext(SelectContext);
 
 	const dropdownVariant = {
 		hidden: {
@@ -48,7 +48,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 
 	const NativeSelect = () => (
 		<Select onChange={handleChange}>
-			<option>Select</option>
+			<option>{placeholder}</option>
 			{children}
 		</Select>
 	);
