@@ -90,6 +90,7 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 					  }
 					: { ...variants[variant] })}
 				{...rest}
+				// rightIcon={<ChevronDownIcon w={5} h={5} />}
 				onClick={() => toggleDropdown()}
 			>
 				{displayValue ?? <Text opacity={0.5}>{placeholder}</Text>}

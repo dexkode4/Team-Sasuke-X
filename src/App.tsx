@@ -1,8 +1,13 @@
-import * as React from 'react';
-import { ChakraProvider, Box, theme, Heading } from '@chakra-ui/react';
-import { Select, SelectOption, SelectList, SelectGroup } from './Select';
-import { SelectButton } from './Select/components/SelectButton';
-import { Value } from './Select/context';
+import * as React from "react";
+import { ChakraProvider, Box, theme, Heading } from "@chakra-ui/react";
+import {
+  Select,
+  SelectOption,
+  SelectList,
+  SelectGroup,
+} from "./Select";
+import { SelectButton } from "./Select/components/SelectButton";
+import { Value } from "./Select/context";
 
 export const App = () => {
 	const handleChange = (value: Value) => {
