@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import { ChevronDownIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {
 	Box,
@@ -8,7 +8,7 @@ import {
 	forwardRef,
 	Text,
 } from '@chakra-ui/react';
-import { SelectContext, Value } from '../context';
+import { SelectContext } from '../context';
 import { Loader, MotionBox } from './Loader';
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
@@ -17,7 +17,6 @@ type SelectButtonProps = Modify<
 	ButtonProps,
 	{
 		icon?: React.ReactNode;
-		onSelect: (value: Value) => void;
 	}
 >;
 
@@ -42,7 +41,6 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 		const {
 			toggleDropdown,
 			displayValue,
-			value,
 			variant,
 			handleDisplayValue,
 			handleValue,
@@ -50,20 +48,12 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 			isOpenDropdown,
 			placeholder
 		} = useContext(SelectContext);
-		const componentJustMounted = useRef(true);
 
 		const handleClearField = (event: React.MouseEvent<HTMLDivElement>) => {
 			event.stopPropagation();
 			handleDisplayValue(null);
 			handleValue('');
 		};
-
-		useEffect(() => {
-			if (!componentJustMounted.current) {
-				onSelect(value);
-			}
-			componentJustMounted.current = false;
-		}, [onSelect, value]);
 
 		const variants: Record<string, ButtonProps> = {
 			flushed: {

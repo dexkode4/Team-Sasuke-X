@@ -1,5 +1,6 @@
+import { CheckIcon } from '@chakra-ui/icons';
 import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
-import React, { useContext, useLayoutEffect, useRef } from 'react';
+import React, { useContext, useLayoutEffect, useMemo, useRef } from 'react';
 import { SelectContext, Value } from '../context';
 
 interface SelectOptionProps extends BoxProps {
@@ -16,8 +17,11 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 			handleValue,
 			handleSelectOptionHeight,
 			variant,
+			value : selectedValue
 		} = useContext(SelectContext);
 		const ref = useRef<HTMLDivElement>(null);
+
+		const isActive = useMemo(() => selectedValue === value, [selectedValue, value])
 
 		useLayoutEffect(() => {
 			if (ref.current) {
@@ -48,6 +52,7 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 				ref={ref}
 				onClick={handleSelect}
 			>
+				{isActive && <CheckIcon mr={1}/>}
 				{children}
 			</Box>
 		);

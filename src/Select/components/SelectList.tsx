@@ -1,6 +1,6 @@
 import { Box, BoxProps, forwardRef, Select } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SelectContext, Value } from '../context';
 import { Modify } from './SelectButton';
 
@@ -9,15 +9,16 @@ type SelectListProps = Modify<
 	{
 		children: React.ReactNode;
 		itemCount?: number;
-		onSelect?: (value: Value) => void;
+		onSelect: (value: Value) => void;
 	}
 >;
 
 const MotionBox = motion<BoxProps>(Box);
 
 export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
-	const { children, itemCount, onChange,onSelect, ...rest } = props;
-	const { isOpenDropdown, optionHeight, variant, placeholder } = useContext(SelectContext);
+	const { children, itemCount, onChange, onSelect, ...rest } = props;
+	const { isOpenDropdown, optionHeight, variant, placeholder, value } =
+		useContext(SelectContext);
 
 	const dropdownVariant = {
 		hidden: {
@@ -43,7 +44,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const { value } = event.target;
-		onSelect && onSelect(value);
+		onSelect(value);
 	};
 
 	const NativeSelect = () => (
@@ -52,6 +53,10 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
 			{children}
 		</Select>
 	);
+
+	useEffect(() => {
+		onSelect(value);
+	}, [onSelect, value]);
 
 	return variant === 'native' ? (
 		<NativeSelect />
