@@ -1,5 +1,5 @@
-import { Box, BoxProps, forwardRef, chakra } from '@chakra-ui/react';
-import React, { useContext, useEffect, useLayoutEffect, useRef } from 'react';
+import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
+import React, { useContext, useLayoutEffect, useRef } from 'react';
 import { SelectContext, Value } from '../context';
 
 interface SelectOptionProps extends BoxProps {
@@ -31,9 +31,7 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 			handleValue(value);
 		};
 
-		const NativeSelectOption = (
-			<chakra.option onClick={handleSelect}>{children}</chakra.option>
-		);
+		const NativeSelectOption = <option value={value}>{children}</option>;
 
 		return variant === 'native' ? (
 			NativeSelectOption

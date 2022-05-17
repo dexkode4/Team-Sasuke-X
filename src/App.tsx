@@ -6,7 +6,7 @@ import { Value } from './Select/context';
 
 export const App = () => {
 	const handleChange = (value: Value) => {
-		console.log(value)
+		console.log('value', value)
 	};
 	return (
 		<ChakraProvider theme={theme}>
@@ -16,7 +16,7 @@ export const App = () => {
 						onChange={handleChange}
 						placeholder='Select option'
 					/>
-					<SelectList>
+					<SelectList onChange={handleChange}>
 						<SelectOption _hover={{
 							bg: 'orange',
 							color: 'white'
