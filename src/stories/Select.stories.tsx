@@ -12,6 +12,7 @@ import {
 export default {
 	title: 'Select',
 	component: CustomSelect,
+	subcomponents: {SelectButton, SelectList, SelectGroup, SelectOption}
 } as ComponentMeta<typeof CustomSelect>;
 
 const Template: ComponentStory<typeof CustomSelect> = (args) => (
@@ -64,6 +65,14 @@ Native.args = {
 export const Flushed = Template.bind({});
 
 Flushed.args = {
+	placeholder: 'Select option',
+	w: '300px',
+	variant: 'flushed',
+};
+
+export const CustomIcon = Template.bind({});
+
+CustomIcon.args = {
 	placeholder: 'Select option',
 	w: '300px',
 	variant: 'flushed',
