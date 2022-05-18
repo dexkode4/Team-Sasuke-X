@@ -1,4 +1,4 @@
-import { Box, BoxProps, forwardRef, Select } from '@chakra-ui/react';
+import { Box, BoxProps, forwardRef, List, ListProps, Select } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useContext, useEffect } from 'react';
 import { Value } from '..';
@@ -6,7 +6,7 @@ import { SelectContext } from '../context';
 import { Modify } from './SelectButton';
 
 type SelectListProps = Modify<
-	BoxProps,
+	ListProps,
 	{
 		children: React.ReactNode;
 		onSelect: (value: Value) => void;
@@ -70,7 +70,7 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
           animate="visible"
           exit="exit"
         >
-          <Box
+          <List
             ref={(el) => {
               if (!el) return;
               heightFromTop =
@@ -85,9 +85,10 @@ export const SelectList = forwardRef<SelectListProps, 'div'>((props, _ref) => {
               h: `${itemCount * optionHeight}px`,
             })}
             {...rest}
+            role="listbox"
           >
             {children}
-          </Box>
+          </List>
         </MotionBox>
       )}
     </AnimatePresence>

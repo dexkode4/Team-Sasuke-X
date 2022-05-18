@@ -1,10 +1,10 @@
 import { CheckIcon } from '@chakra-ui/icons';
-import { Box, BoxProps, forwardRef } from '@chakra-ui/react';
+import { forwardRef, ListItem, ListItemProps } from '@chakra-ui/react';
 import React, { useContext, useLayoutEffect, useMemo, useRef } from 'react';
 import { Value } from '..';
 import { SelectContext } from '../context';
 
-interface SelectOptionProps extends BoxProps {
+interface SelectOptionProps extends ListItemProps {
 	children: React.ReactNode;
 	value: Value;
 }
@@ -20,7 +20,7 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 			variant,
 			value: selectedValue,
 		} = useContext(SelectContext);
-		const ref = useRef<HTMLDivElement>(null);
+		const ref = useRef<any>(null);
 
 		const isActive = useMemo(
 			() => selectedValue === value,
@@ -44,7 +44,9 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 		return variant === 'native' ? (
 			NativeSelectOption
 		) : (
-			<Box
+			<ListItem
+				ref={ref}
+				role="option"
 				p={2}
 				fontSize='md'
 				textAlign='left'
@@ -53,12 +55,11 @@ export const SelectOption = forwardRef<SelectOptionProps, 'div'>(
 				}}
 				{...rest}
 				cursor='pointer'
-				ref={ref}
 				onClick={handleSelect}
 			>
 				{isActive && <CheckIcon mr={1} />}
 				{children}
-			</Box>
+			</ListItem>
 		);
 	},
 );
