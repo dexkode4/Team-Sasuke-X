@@ -17,7 +17,7 @@ type SelectButtonProps = Modify<
 	ButtonProps,
 	{
 		icon?: React.ReactNode;
-		onOpen?: (value: boolean) => void
+		onOpen?: (value: boolean) => void;
 	}
 >;
 
@@ -25,20 +25,20 @@ export const rotate = {
 	rotate: {
 		rotate: -180,
 		transition: {
-			duration: .5,
+			duration: 0.5,
 		},
 	},
 	default: {
 		rotate: 0,
 		transition: {
-			duration: .4,
+			duration: 0.4,
 		},
 	},
 };
 
 export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 	(props, _ref) => {
-		const {icon, onSelect,onOpen, ...rest } = props;
+		const { icon, onSelect, onOpen, _placeholder, ...rest } = props;
 		const {
 			toggleDropdown,
 			displayValue,
@@ -47,7 +47,8 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 			handleValue,
 			isLoading,
 			isOpenDropdown,
-			placeholder
+			placeholder,
+			isDisabled,
 		} = useContext(SelectContext);
 
 		const handleClearField = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -80,8 +81,8 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 		};
 
 		useEffect(() => {
-			onOpen && onOpen(isOpenDropdown)
-		},[isOpenDropdown, onOpen])
+			onOpen && onOpen(isOpenDropdown);
+		}, [isOpenDropdown, onOpen]);
 
 		return (
 			<Button
@@ -94,11 +95,11 @@ export const SelectButton = forwardRef<SelectButtonProps, 'button'>(
 							variant: 'solid',
 					  }
 					: { ...variants[variant] })}
+				isDisabled={isDisabled}
 				{...rest}
-				// rightIcon={<ChevronDownIcon w={5} h={5} />}
 				onClick={() => toggleDropdown()}
 			>
-				{displayValue ?? <Text opacity={0.5}>{placeholder}</Text>}
+				{displayValue ?? <Text opacity={0.5} sx={_placeholder}>{placeholder}</Text>}
 				<Flex alignItems='center'>
 					{isLoading ? (
 						<Loader />

@@ -5,7 +5,7 @@ import {
 	SelectList,
 	SelectGroup,
 	SelectButton,
-	Value
+	Value,
 } from '../Select';
 
 export const Example01 = () => {
@@ -13,10 +13,13 @@ export const Example01 = () => {
 		console.log('value', value);
 	};
 
-
 	return (
 		<Select placeholder='Select option' w='300px' variant='outline'>
-			<SelectButton />
+			<SelectButton
+				_placeholder={{
+					color: 'red',
+				}}
+			/>
 			<SelectList onSelect={handleChange}>
 				<SelectOption
 					_hover={{
